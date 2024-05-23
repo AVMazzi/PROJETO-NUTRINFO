@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,6 @@ namespace NutrInfo.Domain
     {
         public int ID { get; set; }
         public string Nome { get; set; }
-        public Collection<Permissao> Permissoes { get; set; }
+        public Collection<Funcionario> Funcionarios { get; set; }
     }
 }

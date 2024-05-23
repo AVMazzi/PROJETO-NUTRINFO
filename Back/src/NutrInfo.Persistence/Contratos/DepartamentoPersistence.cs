@@ -21,8 +21,8 @@ namespace NutrInfo.Persistence.Contratos
         {
             IQueryable<Departamento> query = _context.Departamentos;
 
-            query = query
-                    .Include(perm => perm.Permissoes);
+            //query = query
+            //        .Include(perm => perm.Permissoes);
 
             query.OrderBy(d => d.Nome)
                  .Where(d => d.Nome.ToLower().Contains(departamentoNome.ToLower()));
@@ -33,7 +33,7 @@ namespace NutrInfo.Persistence.Contratos
         {
             IQueryable<Departamento> query = _context.Departamentos;
 
-            query = query.Include(perm => perm.Permissoes);
+            //query = query.Include(perm => perm.Permissoes);
             query.OrderBy(dpto => dpto.ID);
             return await query.ToListAsync();
         }
@@ -42,7 +42,7 @@ namespace NutrInfo.Persistence.Contratos
         {
             IQueryable<Departamento> query = _context.Departamentos;
 
-            query.Include(perm => perm.Permissoes); ;
+            //query.Include(perm => perm.Permissoes); ;
 
             query.OrderBy(d => d.Nome)
                  .Where(dpto => dpto.ID.Equals(departamentoId));

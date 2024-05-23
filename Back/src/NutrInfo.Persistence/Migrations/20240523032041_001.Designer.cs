@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NutrInfo.Persistence.Contextos;
 
@@ -11,9 +12,11 @@ using NutrInfo.Persistence.Contextos;
 namespace NutrInfo.Persistence.Migrations
 {
     [DbContext(typeof(NutrInfoContext))]
-    partial class NutrInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20240523032041_001")]
+    partial class _001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -12,7 +12,7 @@ using NutrInfo.Persistence.Contextos;
 namespace NutrInfo.Persistence.Migrations
 {
     [DbContext(typeof(NutrInfoContext))]
-    [Migration("20240522222534_000")]
+    [Migration("20240523030001_000")]
     partial class _000
     {
         /// <inheritdoc />
@@ -62,11 +62,16 @@ namespace NutrInfo.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("EstadoID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Rua")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("EstadoID");
 
                     b.ToTable("Enderecos");
                 });
@@ -79,16 +84,11 @@ namespace NutrInfo.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("EnderecoID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("EnderecoID");
 
                     b.ToTable("Estados");
                 });
@@ -117,6 +117,12 @@ namespace NutrInfo.Persistence.Migrations
                     b.Property<DateTime>("DataNasc")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DepartamentoID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EnderecoID")
+                        .HasColumnType("int");
+
                     b.Property<string>("EstadoCivil")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -124,6 +130,9 @@ namespace NutrInfo.Persistence.Migrations
                     b.Property<string>("Foto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LoginID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -134,6 +143,12 @@ namespace NutrInfo.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("DepartamentoID");
+
+                    b.HasIndex("EnderecoID");
+
+                    b.HasIndex("LoginID");
 
                     b.ToTable("Funcionarios");
                 });
@@ -181,11 +196,26 @@ namespace NutrInfo.Persistence.Migrations
                     b.ToTable("Permissoes");
                 });
 
-            modelBuilder.Entity("NutrInfo.Domain.Estado", b =>
+            modelBuilder.Entity("NutrInfo.Domain.Endereco", b =>
                 {
+                    b.HasOne("NutrInfo.Domain.Estado", null)
+                        .WithMany("Enderecos")
+                        .HasForeignKey("EstadoID");
+                });
+
+            modelBuilder.Entity("NutrInfo.Domain.Funcionario", b =>
+                {
+                    b.HasOne("NutrInfo.Domain.Departamento", null)
+                        .WithMany("Funcionarios")
+                        .HasForeignKey("DepartamentoID");
+
                     b.HasOne("NutrInfo.Domain.Endereco", null)
-                        .WithMany("Estados")
+                        .WithMany("Funcionarios")
                         .HasForeignKey("EnderecoID");
+
+                    b.HasOne("NutrInfo.Domain.Login", null)
+                        .WithMany("Funcionarios")
+                        .HasForeignKey("LoginID");
                 });
 
             modelBuilder.Entity("NutrInfo.Domain.Permissao", b =>
@@ -197,12 +227,24 @@ namespace NutrInfo.Persistence.Migrations
 
             modelBuilder.Entity("NutrInfo.Domain.Departamento", b =>
                 {
+                    b.Navigation("Funcionarios");
+
                     b.Navigation("Permissoes");
                 });
 
             modelBuilder.Entity("NutrInfo.Domain.Endereco", b =>
                 {
-                    b.Navigation("Estados");
+                    b.Navigation("Funcionarios");
+                });
+
+            modelBuilder.Entity("NutrInfo.Domain.Estado", b =>
+                {
+                    b.Navigation("Enderecos");
+                });
+
+            modelBuilder.Entity("NutrInfo.Domain.Login", b =>
+                {
+                    b.Navigation("Funcionarios");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,6 +13,6 @@ namespace NutrInfo.Domain
     public string Bairro { get; set; }
     public string Cidade { get; set; }
     public string CEP { get; set;}
-    public Collection<Estado> Estados { get; set; }
+        public Collection<Funcionario> Funcionarios { get; set; }
     }
 }
